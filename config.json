@@ -1,0 +1,6 @@
+{
+    "mongodb": {
+        "username": "master",
+        "password": "master123"
+    }
+}
