@@ -78,25 +78,24 @@ app.post('/api/restaurant/add', async (req, res) => {
     }
 });
 
-/*
+
 app.put('/api/restaurant/:id', async (req, res) => {
     try {
+        const id = req.params.id;
         const restarant = req.body;
         if(!restarant || !Object.keys(restarant).length ){
             return res.status(400).end('Restaurant Data is required.')
         }
-
-
-
+        const response = await Restaurant.findOneAndUpdate({ _id: id }, restarant)
         return res.status(200).json({
-            message: "Restaurant updated successfully."
+            message: response ? "Restaurant updated successfully." : "No Restaurant found with the given ID."
         })
     } catch (err){
         return res.status(500).end(`Some error occured while fetching the Restaurant.`);
     }
 
 })
-*/
+
 
 app.delete('/api/restaurant/:id', async (req, res) => {
     try {
