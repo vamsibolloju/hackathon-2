@@ -79,13 +79,51 @@ app.post('/api/restaurant/add', async (req, res) => {
 });
 
 /*
-app.post('/api/restaurant/id', async (req, res) => {
+app.put('/api/restaurant/:id', async (req, res) => {
     try {
+        const restarant = req.body;
+        if(!restarant || !Object.keys(restarant).length ){
+            return res.status(400).end('Restaurant Data is required.')
+        }
+
+
+
+        return res.status(200).json({
+            message: "Restaurant updated successfully."
+        })
+    } catch (err){
+        return res.status(500).end(`Some error occured while fetching the Restaurant.`);
     }
+
 })
 */
 
+app.delete('/api/restaurant/:id', async (req, res) => {
+    try {
+        const restaurantId = req.params.id;
+        const response = await Restaurant.findOneAndDelete({
+            _id: restaurantId
+        });
+        return res.status(200).json({
+            restaurant: response,
+            message: "Restaurant deleted successfully."
+        });
+    } catch {
+        return res.status(500).end(`Some error occured while deleting the Restaurant.`);
+    }
+});
 
+app.delete('/api/restaurant', async (req, res) => {
+    try {
+        const response = await Restaurant.deleteMany({});
+        return res.status(200).json({
+            restaurants: response,
+            message: "Restaurant deleted successfully."
+        });
+    } catch {
+        return res.status(500).end(`Some error occured while deleting the Restaurant.`);
+    }
+});
 
 /*ToDo 3: Export the app*/
 module.exports = app;
